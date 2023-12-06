@@ -1,1 +1,1 @@
-export * from './year2023Day1';
+export * from './Year2023Day1';
