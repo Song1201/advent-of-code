@@ -1,26 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { year2023Day1 } from './events/2023/day1/year2023Day1';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    return (
+        <button
+            onClick={() => {
+                console.log(year2023Day1());
+            }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+            Day 1
+        </button>
+    );
 }
 
 export default App;
