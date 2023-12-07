@@ -17,5 +17,10 @@
         "jsx": "react-jsx",
         "baseUrl": "./"
     },
-    "include": [".eslintrc.js", "prettier.config.mjs", "**/src/**/*"]
+    "include": [
+        ".eslintrc.js",
+        "prettier.config.mjs",
+        "**/src/**/*",
+        "tailwind.config.js"
+    ]
 }

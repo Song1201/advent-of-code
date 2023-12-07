@@ -52,12 +52,13 @@ export function Year2023Day1() {
 
     return (
         <div>
-            <h1>Year 2023 Day 1</h1>
+            <h2 className='text-lg'>Day 1</h2>
             <textarea
                 value={inputText}
                 onChange={(e) => {
                     setInputText(e.target.value);
                 }}
+                className='border-solid border-2'
             />
             <button
                 onClick={() => {

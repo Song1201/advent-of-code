@@ -1,8 +1,12 @@
 import './App.css';
-import { Year2023Day1 } from './events/2023/day1';
+import { Year2023 } from './events/2023';
 
 function App() {
-    return <Year2023Day1 />;
+    return (
+        <div className='m-3'>
+            <Year2023 />
+        </div>
+    );
 }
 
 export default App;
