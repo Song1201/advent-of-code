@@ -1,5 +1,6 @@
 import { Year2023Day1 } from './day1';
 import { Year2023Day2 } from './day2';
+import { Year2023Day3 } from './day3';
 
 export function Year2023() {
     return (
@@ -8,6 +9,7 @@ export function Year2023() {
             <div className='flex gap-y-1 flex-col'>
                 <Year2023Day1 />
                 <Year2023Day2 />
+                <Year2023Day3 />
             </div>
         </>
     );

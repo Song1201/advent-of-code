@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Year2023Day } from '../day/Year2023Day';
 
 const CUBES_IN_BAG = {
     blue: 14,
@@ -88,34 +88,11 @@ function sumNeededCubePowers(inputStr: string) {
 }
 
 export function Year2023Day2() {
-    const [inputText, setInputText] = useState('');
-
     return (
-        <div>
-            <h2 className='text-lg'>Day 2</h2>
-            <div className='flex gap-x-1'>
-                <textarea
-                    value={inputText}
-                    onChange={(e) => {
-                        setInputText(e.target.value);
-                    }}
-                    className='border-solid border-2'
-                />
-                <button
-                    onClick={() => {
-                        console.log(sumPossibleGameIds(inputText));
-                    }}
-                >
-                    Solve Part 1
-                </button>
-                <button
-                    onClick={() => {
-                        console.log(sumNeededCubePowers(inputText));
-                    }}
-                >
-                    Solve Part 2
-                </button>
-            </div>
-        </div>
+        <Year2023Day
+            day={2}
+            solvePart1={sumPossibleGameIds}
+            solvePart2={sumNeededCubePowers}
+        />
     );
 }

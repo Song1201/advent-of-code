@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { isEmptyValue } from 'src/utils/isEmptyValue';
+import { Year2023Day } from '../day/Year2023Day';
 
 const DIGIT_VALUE_MAP = {
     one: 1,
@@ -48,25 +48,13 @@ function computeCalibrationValue(input: string) {
 }
 
 export function Year2023Day1() {
-    const [inputText, setInputText] = useState('');
-
     return (
-        <div>
-            <h2 className='text-lg'>Day 1</h2>
-            <textarea
-                value={inputText}
-                onChange={(e) => {
-                    setInputText(e.target.value);
-                }}
-                className='border-solid border-2'
-            />
-            <button
-                onClick={() => {
-                    console.log(computeCalibrationValue(inputText));
-                }}
-            >
-                Solve Puzzle
-            </button>
-        </div>
+        <Year2023Day
+            day={1}
+            solvePart1={() => {
+                return 'Forgot to keep part 1 solution code, oops!';
+            }}
+            solvePart2={computeCalibrationValue}
+        />
     );
 }
