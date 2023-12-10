@@ -1,3 +1,4 @@
+import { sum } from 'src/utils/sum';
 import { Year2023Day } from '../day/Year2023Day';
 
 const CUBES_IN_BAG = {
@@ -57,7 +58,7 @@ function sumPossibleGameIds(inputStr: string) {
         )
         .map((game) => game.id);
 
-    return possibleGameIds.reduce((sum, currentValue) => sum + currentValue, 0);
+    return sum(possibleGameIds);
 }
 
 function computeNeededCubes({ cubeGroups }: Game): CubeGroup {
