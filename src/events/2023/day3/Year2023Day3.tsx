@@ -1,3 +1,4 @@
+import { sum } from 'src/utils/sum';
 import { Year2023Day } from '../day/Year2023Day';
 
 function parseMatrix(inputText: string) {
@@ -14,6 +15,14 @@ function parseMatrix(inputText: string) {
     paddedLines.unshift('.'.repeat(paddedLineLength));
     paddedLines.push('.'.repeat(paddedLineLength));
     return paddedLines;
+}
+
+interface Part {
+    value: number;
+    /** row of the first digit of the part */
+    row: number;
+    /** col of the first digit of the part */
+    col: number;
 }
 
 function isPart({
@@ -37,10 +46,10 @@ function isPart({
     );
 }
 
-function sumPartNumbers(inputText: string) {
+function findParts(inputText: string) {
     const lines = parseMatrix(inputText);
 
-    let sumOfParts = 0;
+    const parts: Part[] = [];
     for (let row = 0; row < lines.length; row++) {
         const line = lines[row];
         for (let col = 0; col < line.length; col++) {
@@ -49,17 +58,96 @@ function sumPartNumbers(inputText: string) {
 
             const numberStr = numberMatch[0];
             if (isPart({ col, row, lines, numberStr })) {
-                sumOfParts += parseInt(numberStr, 10);
+                parts.push({ col, row, value: parseInt(numberStr) });
             }
 
             col += numberStr.length;
         }
     }
-    return sumOfParts;
+    return parts;
+}
+
+function sumPartNumbers(inputText: string) {
+    const parts = findParts(inputText);
+    return sum(parts.map((part) => part.value));
+}
+
+/**
+ * @returns locations covered by part digits. `{row: 1, col:2, value: 87} => ['1, 2', '1, 3']`
+ */
+function getPartCoveredLocations(part: Part) {
+    return [...Array(part.value.toString().length).keys()].map(
+        (idx) => `${part.row}, ${part.col + idx}`,
+    );
+}
+
+function makePartsMap(parts: Part[]) {
+    return Object.fromEntries(
+        parts.flatMap((part) => {
+            return getPartCoveredLocations(part).map((location) => [
+                location,
+                part,
+            ]);
+        }),
+    );
+}
+
+function getPartId({ col, row, value }: Part) {
+    return `${row}, ${col}, ${value}`;
+}
+
+function getPart(id: string) {
+    console.log(id.split(', '));
+    const [row, col, value] = id
+        .split(', ')
+        .map((numberStr) => parseInt(numberStr, 10));
+    return { row, col, value };
+}
+
+function sumGearRatios(inputText: string) {
+    const parts = findParts(inputText);
+    const partsMap = makePartsMap(parts);
+
+    const lines = parseMatrix(inputText);
+    let gearRatiosSum = 0;
+    for (let row = 0; row < lines.length; row++) {
+        const line = lines[row];
+        for (let col = 0; col < line.length; col++) {
+            if (line[col] !== '*') continue;
+            const adjacentPartIds = new Set(
+                [
+                    `${row - 1}, ${col - 1}`,
+                    `${row - 1}, ${col}`,
+                    `${row - 1}, ${col + 1}`,
+                    `${row}, ${col - 1}`,
+                    `${row}, ${col + 1}`,
+                    `${row + 1}, ${col - 1}`,
+                    `${row + 1}, ${col}`,
+                    `${row + 1}, ${col + 1}`,
+                ]
+                    .map((adjacent) => partsMap[adjacent])
+                    .filter(Boolean)
+                    .map(getPartId),
+            );
+            if (adjacentPartIds.size === 2) {
+                const gearAdjacentPartValues = [...adjacentPartIds].map(
+                    (partId) => getPart(partId).value,
+                );
+                gearRatiosSum +=
+                    gearAdjacentPartValues[0] * gearAdjacentPartValues[1];
+            }
+        }
+    }
+
+    return gearRatiosSum;
 }
 
 export function Year2023Day3() {
     return (
-        <Year2023Day day={3} solvePart1={sumPartNumbers} solvePart2={() => 0} />
+        <Year2023Day
+            day={3}
+            solvePart1={sumPartNumbers}
+            solvePart2={sumGearRatios}
+        />
     );
 }
